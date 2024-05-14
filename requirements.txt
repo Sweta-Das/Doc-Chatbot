@@ -1,5 +1,10 @@
+numpy
 PyPDF2
-chromadb
+chromadb-client
 langchain
 accelerate
+ipykernel
+torch
+python-dotenv
 transformers
+sentence-transformers
