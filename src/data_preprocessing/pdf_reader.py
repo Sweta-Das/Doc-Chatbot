@@ -6,7 +6,7 @@ import PyPDF2
 
 load_dotenv(find_dotenv())
 
-path = os.environ['pdf_path']
+pdf_pth = os.environ['pdf_path']
 
 
 # Extracting Table of Contents
@@ -27,14 +27,13 @@ def extract_ToC(pdf_pth, page):
         
         return toc_entries
     
-pdf_pth = path
 toc = extract_ToC(pdf_pth, 5)
 
 # Removing unnecessary contents
 toc = toc[:-2]
 
 # Parsing table of contents
-def parse_toc(toc_ls):
+def parsing_toc(toc_ls):
     toc_entries = []
     toc_pattern = re.compile(r'^(.*?)\s+(\d+)\s*$')
 
@@ -43,8 +42,23 @@ def parse_toc(toc_ls):
         if match:
             topic = re.sub(r'\.{2,}', '', match.group(1)).strip()
             page = int(match.group(2))
-            toc_entries.append((topic, page))
-    
+            ToC_dict = {
+                "topic": topic,
+                "pg": page
+            }
+            toc_entries.append(ToC_dict)
     return toc_entries
 
-toc_entries = parse_toc(toc)
+
+toc_entries = parsing_toc(toc)
+toc_entries = toc_entries[:-2]
+
+# Improvising the table of content
+topics_to_keep = [
+    'FOREWORD',
+    'ABBREVIATIONS',
+    'Recovery and Accelerated Learning (ReAL)',
+    'The Road Map for Recovery and Accelerated Learning'
+]
+
+fltr_toc = [entry for entry in toc_entries if entry['topic'] in topics_to_keep]
