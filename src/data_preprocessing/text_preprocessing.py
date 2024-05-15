@@ -1,21 +1,9 @@
 # Text Preprocessing Before Embedding
-from data_preprocessing.pdf_reader import fltr_toc
+from pdf_reader import fltr_toc
 from dotenv import load_dotenv, find_dotenv
 import os
 import PyPDF2
 import sys
-
-
-load_dotenv(find_dotenv())
-
-pdf_pth = os.environ['pdf_path']
-sys_path = os.environ['sys_path']
-sys.path.append(sys_path)
-
-# Total number of pages in pdf
-with open(pdf_pth, 'rb') as file:
-    pdf_reader = PyPDF2.PdfReader(file)
-    num_pages = len(pdf_reader.pages)
 
 
 # Extracting text from PDF
@@ -30,7 +18,7 @@ def extract_text_from_pdf(pdf_pth, start_page, end_page):
 
 
 # Initial chunking of text based on pages
-def init_chunking_text(toc_entries):
+def init_chunking_text(pdf_pth, toc_entries):
     initial_txt = []
     for i in range(len(toc_entries)):
         start_pg = toc_entries[i]['pg']
@@ -40,27 +28,45 @@ def init_chunking_text(toc_entries):
     initial_txt = [i for i in initial_txt if i.strip()] # Removed empty strings
     return initial_txt
     
-txt_chnks = init_chunking_text(fltr_toc)
 
+def main():
+    
+    # Loading environment variables
+    load_dotenv(find_dotenv())
 
-# Extracting foreword and abbraviations
-frwd_abb = txt_chnks[0].split('|')
-frwd = frwd_abb[0]
-abb = ' | '.join(part.strip() for part in frwd_abb[1:])
+    pdf_pth = os.environ['pdf_path']
+    sys_path = os.environ['sys_path']
+    sys.path.append(sys_path)
 
+    # Total number of pages in pdf
+    with open(pdf_pth, 'rb') as file:
+        pdf_reader = PyPDF2.PdfReader(file)
+        num_pages = len(pdf_reader.pages)
+    txt_chnks = init_chunking_text(pdf_pth, fltr_toc)
 
-# Removing Table of Contents
-toc_c = txt_chnks[1].split('|')
-content = ' | '.join(part.strip() for part in toc_c[1:])
+    # Extracting foreword and abbraviations
+    frwd_abb = txt_chnks[0].split('|')
+    frwd = frwd_abb[0]
+    abb = ' | '.join(part.strip() for part in frwd_abb[1:])
 
-chunks = [frwd, abb, content, txt_chnks[2]]
+    # Removing Table of Contents
+    toc_c = txt_chnks[1].split('|')
+    content = ' | '.join(part.strip() for part in toc_c[1:])
 
+    chunks = [frwd, abb, content, txt_chnks[2]]
 
-# Creating topic_content list
-topic_content = []
-for i in range(len(chunks)):
-    topic_content_dict = {
-        "topic": fltr_toc[i]['topic'],
-        "content": chunks[i]
-    }
-    topic_content.append(topic_content_dict)
+    # Creating topic_content list
+    topic_content = []
+    for i in range(len(chunks)):
+        topic_content_dict = {
+            "topic": fltr_toc[i]['topic'],
+            "content": chunks[i]
+        }
+        topic_content.append(topic_content_dict)
+
+    return topic_content
+
+topic_content = main()
+
+if __name__=="__main__":
+    main()

@@ -4,10 +4,6 @@ import os
 import re
 import PyPDF2
 
-load_dotenv(find_dotenv())
-
-pdf_pth = os.environ['pdf_path']
-
 
 # Extracting Table of Contents
 def extract_ToC(pdf_pth, page):
@@ -26,11 +22,7 @@ def extract_ToC(pdf_pth, page):
             toc_entries.append(i)
         
         return toc_entries
-    
-toc = extract_ToC(pdf_pth, 5)
 
-# Removing unnecessary contents
-toc = toc[:-2]
 
 # Parsing table of contents
 def parsing_toc(toc_ls):
@@ -50,15 +42,36 @@ def parsing_toc(toc_ls):
     return toc_entries
 
 
-toc_entries = parsing_toc(toc)
-toc_entries = toc_entries[:-2]
+def main():
+    
+    # Loading environment variables
+    load_dotenv(find_dotenv())
 
-# Improvising the table of content
-topics_to_keep = [
-    'FOREWORD',
-    'ABBREVIATIONS',
-    'Recovery and Accelerated Learning (ReAL)',
-    'The Road Map for Recovery and Accelerated Learning'
-]
+    pdf_pth = os.environ['pdf_path']
 
-fltr_toc = [entry for entry in toc_entries if entry['topic'] in topics_to_keep]
+    # Extracting table of contents
+    toc = extract_ToC(pdf_pth, 5)
+    
+    # Removing unnecessary contents
+    toc = toc[:-2]
+    
+    # Parsing contents
+    toc_entries = parsing_toc(toc)
+    toc_entries = toc_entries[:-2]
+
+    # Improvising the table of content
+    topics_to_keep = [
+        'FOREWORD',
+        'ABBREVIATIONS',
+        'Recovery and Accelerated Learning (ReAL)',
+        'The Road Map for Recovery and Accelerated Learning'
+    ]
+
+    fltr_toc = [entry for entry in toc_entries if entry['topic'] in topics_to_keep]
+    return fltr_toc
+
+fltr_toc = main()
+print(fltr_toc)
+
+if __name__ == "__main__":
+    main()
