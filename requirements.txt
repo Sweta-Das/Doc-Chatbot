@@ -6,7 +6,7 @@ langchain
 accelerate
 ipykernel
 torch
-flashrank
 python-dotenv
 transformers
 sentence-transformers
+flashrank
