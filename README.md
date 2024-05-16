@@ -23,7 +23,7 @@ Technical Assessment Round-2
 - **Chains with Memory**
     - Maintaining conversation flow using memory with **ConversationChain()** and **VectorStoreRetrieverMemory** of LangChain
 - **Query Processing**
-    - Handling incoming queries from users, preprocessing them & passing to LLM to generate response with vector database acting as retriever
+    - Handling incoming queries from users by preprocessing them through NER, spelling correction and lemmatization
 - **Chat Pipeline**
     - Creating a chat pipeline class where all the above components will be integrated
 
