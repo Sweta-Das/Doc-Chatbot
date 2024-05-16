@@ -6,7 +6,9 @@ langchain
 accelerate
 ipykernel
 torch
+nltk
+spacy
 python-dotenv
 transformers
 sentence-transformers
-flashrank
+pyspellchecker
