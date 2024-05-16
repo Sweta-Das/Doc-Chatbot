@@ -58,7 +58,7 @@ def chain_retrievalQA(query):
     return response
 
 
-def conversational_RetrievalChain(query):
+def conversational_RetrievalChain(input):
 
     # Prompt to generate search query for retriever
     srch_qry_prompt = ChatPromptTemplate.from_messages([

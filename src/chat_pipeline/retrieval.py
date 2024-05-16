@@ -1,10 +1,7 @@
 from sentence_transformers import SentenceTransformer
-from src.data_ingestion.vector_db import hf, coll, coll_dict
+from src.data_ingestion.vector_db import coll
 from dotenv import load_dotenv, find_dotenv
 from langchain.vectorstores import Chroma
-import chromadb
-import sys
-import os
 
 # Docs extraction from querying the vector database
 def query_based_docs_extraction(query: str, emb_model):
@@ -25,20 +22,19 @@ def query_based_docs_extraction(query: str, emb_model):
         print("Vector Search failed! ", e)
 
 
-def main():
+def main(query):
 
     load_dotenv(find_dotenv())
-    client = chromadb.HttpClient(host="localhost", port=8000)
 
     # Embedding model for query
     emb_model = SentenceTransformer("all-mpnet-base-v2")
 
-    query = "What is the full form of LEG?"
+    # query = "What is the full form of LEG?"
 
     docs = query_based_docs_extraction(query, emb_model)
     return docs
 
-docs = main()
+docs = main("What is the full form of LEG?")
 
 if __name__=="__main__":
     main()
