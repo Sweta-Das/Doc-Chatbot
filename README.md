@@ -29,5 +29,6 @@ Technical Assessment Round-2
 - **Chat Pipeline**
     - Creating a chat pipeline class where all the above components will be integrated
 
+Every folder in this project contains a Jupyter notebook (.ipynb) file to display intermediate outputs.
 
 *P.S. This project aims to build the PDF chatbot concentrated on a single PDF file. But, it can be scaled to include multiple PDFs, if they have the same formats, so that they can be chunked properly.*

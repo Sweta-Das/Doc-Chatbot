@@ -4,7 +4,7 @@ import sys
 import uuid
 import chromadb
 from dotenv import find_dotenv, load_dotenv
-from data_preprocessing.text_preprocessing import topic_content
+from src.data_preprocessing.text_preprocessing import topic_content
 import chromadb.utils.embedding_functions as embedding_functions
 
 

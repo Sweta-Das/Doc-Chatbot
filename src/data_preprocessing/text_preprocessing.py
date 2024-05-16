@@ -1,10 +1,9 @@
 # Text Preprocessing Before Embedding
-from pdf_reader import fltr_toc
+from src.data_preprocessing.pdf_reader import fltr_toc
 from dotenv import load_dotenv, find_dotenv
 import os
 import PyPDF2
 import sys
-
 
 # Extracting text from PDF
 def extract_text_from_pdf(pdf_pth, start_page, end_page):
@@ -15,7 +14,6 @@ def extract_text_from_pdf(pdf_pth, start_page, end_page):
             page = pdf_reader.pages[page_num]
             text += page.extract_text()
     return text
-
 
 # Initial chunking of text based on pages
 def init_chunking_text(pdf_pth, toc_entries):
@@ -28,7 +26,6 @@ def init_chunking_text(pdf_pth, toc_entries):
     initial_txt = [i for i in initial_txt if i.strip()] # Removed empty strings
     return initial_txt
     
-
 def main():
     
     # Loading environment variables
