@@ -19,9 +19,9 @@ Technical Assessment Round-2
     - Query Based Documents Extraction -> Extracting relevant documents from vector database based on user's query
     - Ranking the retrieved results based on similarity
 - **Chains**
-    - Maintaining conversation flow through **LLMChain()** of LangChain
+    - Maintaining conversation flow through **RetrievalQA**, **create_retrieval_chain** and **create_history_aware_retriever** of LangChain
 - **Chains with Memory**
-    - Maintaining conversation flow using memory with **ConversationChain()** of LangChain
+    - Maintaining conversation flow using memory with **ConversationChain()** and **VectorStoreRetrieverMemory** of LangChain
 - **Query Processing**
     - Handling incoming queries from users, preprocessing them & passing to LLM to generate response with vector database acting as retriever
 - **Chat Pipeline**
