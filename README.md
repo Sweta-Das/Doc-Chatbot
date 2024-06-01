@@ -1,5 +1,4 @@
-# ILAB-Doc-Chatbot
-Technical Assessment Round-2
+# Doc-Chatbot
 
 ## Task-1: Data Preprocessing
 - Installing libraries from requirements.txt `pip install -r requirements.txt`
